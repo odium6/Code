@@ -20,17 +20,21 @@ def point(number):
 def api():
     for i in languages:
         try:
+            a = requests.get(f"https://api.github.com/search/repositories?q=language:{i}")
             data = a.json()
             dat = data['total_count']
+            print(Fore.RESET + f'{i} -- ' + Fore.GREEN + point(f'{dat}') + Fore.RESET + ' -- projects')
             count.append(data['total_count'])
             succs = 1
         except KeyError:
+            print(Fore.RESET + 'Server ' + Fore.RED + 'rejected ' + Fore.RESET + 'request' + Fore.CYAN+ f' {i}' + Fore.RED + ' (KeyError)')
             succs = 0
         except:
             print(Fore.RED + 'Unknown error')
             succs = 0
     if(succs == 1):
         time.sleep(1)
+        print(Fore.LIGHTCYAN_EX + "\nSUCCESSFUL!")
     else:
         pass
 
