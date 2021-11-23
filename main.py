@@ -1,4 +1,5 @@
 import requests
+import json
 import matplotlib.pyplot as plt
 import time
 from colorama import Fore, init
