@@ -8,7 +8,6 @@ password = int(input('Enter code access\n'))
 
 errors = 0
 num = 0
-password = int(input('Enter code access\n'))
 languages = ['python', 'cpp', 'java', 'c#', 'javascript', 'go', 'pascal', 'basic']
 count = []
 succs = 0
