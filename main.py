@@ -3,6 +3,7 @@ import json
 import matplotlib.pyplot as plt
 import time
 from colorama import Fore, init
+
 number_c = 1
 password = int(input('Enter code access\n'))
 languages = ['python', 'cpp', 'java', 'c#', 'javascript', 'go', 'pascal', 'basic']
