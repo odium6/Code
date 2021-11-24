@@ -3,10 +3,46 @@ import json
 import matplotlib.pyplot as plt
 import time
 from colorama import Fore, init
+number_c = 1
 password = int(input('Enter code access\n'))
 languages = ['python', 'cpp', 'java', 'c#', 'javascript', 'go', 'pascal', 'basic']
 count = []
 succs = 0
+custom_language = 0
+
+try:
+    check_custom = int(input("Would you like to introduce your programming languages?\n" + Fore.LIGHTCYAN_EX + "1 - yes" + " or" + " 2 - no\n"))
+except ValueError:
+    time.sleep(1)
+    print(Fore.RED + "You entered a line, not a number")
+    time.sleep(0.4)
+    print(Fore.WHITE + 'Please, try again')
+    exit(0)
+if(check_custom == 1):
+    print("How many programming languages do you need?")
+    try:
+        colvo = int(input())
+    except ValueError:
+        print(Fore.RED + 'You entered a line, not a number')
+        print(Fore.WHITE + 'Please, try again')
+        exit(0)
+    except:
+        print(Fore.RED + 'Unknown error')
+    for i in range(0, colvo):
+        while custom_language != languages:
+            print(Fore.BLUE + f'Enter the programming languages you need {number_c}')
+            custom_language = input()
+            if(custom_language in languages):
+                print(Fore.RED + "Such a programming language already exists in the array")
+                time.sleep(0.7)
+                print(Fore.WHITE + 'Please, try again')
+            else:
+                languages.append(custom_language)
+                number_c += 1
+                break
+else:
+    pass
+
 def point(number):
     number = str(number)[::-1]
     result = ''
@@ -52,8 +88,9 @@ if(password == 1):
 if(password == 2):
     print(Fore.GREEN + "START!")
     api()
-if(password != 2 and password !=1):
+if(password != 1) and (password != 2):
     print(Fore.RED + 'YOU DON’T HAVE ACCESS')
+
 def plot():
     plt.bar(languages, count)
     plt.title('Языки программирования')
