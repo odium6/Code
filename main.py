@@ -11,8 +11,9 @@ num = 0
 languages = ['python', 'cpp', 'java', 'c#', 'javascript', 'go', 'pascal', 'basic']
 count = []
 succs = 0
-custom_language = 0
 number_c = 1
+custom_language = 0
+
 
 def point(number):
     number = str(number)[::-1]
