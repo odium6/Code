@@ -5,15 +5,58 @@ import time
 from colorama import Fore, init
 
 number_c = 1
+errors = 0
+num = 0
 password = int(input('Enter code access\n'))
 languages = ['python', 'cpp', 'java', 'c#', 'javascript', 'go', 'pascal', 'basic']
 count = []
 succs = 0
 custom_language = 0
+number_c = 1
+
+def point(number):
+    number = str(number)[::-1]
+    result = ''
+    for i, num in enumerate(number):
+        if i % 3 == 0:
+            result += '.'
+        result += num
+    result = result[::-1][:-1]
+    return result
+
+def api():
+    global errors, num
+    for i in languages:
+        num += 1
+        try:
+            a = requests.get(f"https://api.github.com/search/repositories?q=language:{i}")
+            data = a.json()
+            dat = data['total_count']
+            print(Fore.LIGHTWHITE_EX + f'{num} ' + Fore.RESET + f'{i} -- ' + Fore.GREEN + point(f'{dat}') + Fore.RESET + ' -- projects')
+            count.append(data['total_count'])
+            succs = 1
+        except KeyError:
+            errors += 1
+            print(Fore.LIGHTWHITE_EX + f'{num} ' + Fore.RESET + 'Server ' + Fore.RED + 'rejected ' + Fore.RESET + 'request' + Fore.CYAN+ f' {i}' + Fore.LIGHTRED_EX + ' (KeyError)')
+            succs = 0
+        except:
+            print(Fore.RED + 'Unknown error')
+            succs = 0
+            errors += 1
+    if(succs == 1):
+        time.sleep(1)
+        print(Fore.LIGHTCYAN_EX + "\nSUCCESSFUL!")
+    else:
+        pass
+
+if(password != 1) and (password != 2):
+    print(Fore.LIGHTRED_EX + 'YOU DON’T HAVE ACCESS')
+    exit(0)
 
 try:
     check_custom = int(input("Would you like to introduce your programming languages?\n" + Fore.LIGHTCYAN_EX + "1 - yes" + " or" + " 2 - no\n"))
 except ValueError:
+    errors += 1
     time.sleep(1)
     print(Fore.RED + "You entered a line, not a number")
     time.sleep(0.4)
@@ -24,10 +67,12 @@ if(check_custom == 1):
     try:
         colvo = int(input())
     except ValueError:
+        errors += 1
         print(Fore.RED + 'You entered a line, not a number')
         print(Fore.WHITE + 'Please, try again')
         exit(0)
     except:
+        errors += 1
         print(Fore.RED + 'Unknown error')
     for i in range(0, colvo):
         while custom_language != languages:
@@ -91,6 +136,8 @@ if(password == 2):
     api()
 if(password != 1) and (password != 2):
     print(Fore.RED + 'YOU DON’T HAVE ACCESS')
+
+print(Fore.LIGHTRED_EX + f'\nTotal errors - {errors}')
 
 def plot():
     plt.bar(languages, count)
