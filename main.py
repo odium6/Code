@@ -3,17 +3,17 @@ import json
 import matplotlib.pyplot as plt
 import time
 from colorama import Fore, init
+import re
 
 password = int(input('Enter code access\n'))
 
 errors = 0
 num = 0
-languages = ['python', 'cpp', 'java', 'c#', 'javascript', 'go', 'pascal', 'basic']
+languages = []
 count = []
 succs = 0
 number_c = 1
-custom_language = 0
-
+custom_language = 2
 
 def point(number):
     number = str(number)[::-1]
@@ -54,58 +54,45 @@ if(password != 1) and (password != 2):
     print(Fore.LIGHTRED_EX + 'YOU DON’T HAVE ACCESS')
     exit(0)
 
-try:
-    check_custom = int(input("Would you like to introduce your programming languages?\n" + Fore.LIGHTCYAN_EX + "1 - yes" + " or" + " 2 - no\n"))
-except ValueError:
-    errors += 1
-    time.sleep(1)
-    print(Fore.RED + "You entered a line, not a number")
-    time.sleep(0.4)
-    print(Fore.WHITE + 'Please, try again')
-    exit(0)
-if(check_custom == 1):
-    print("How many programming languages do you need?")
-    try:
-        colvo = int(input())
-    except ValueError:
-        errors += 1
-        print(Fore.RED + 'You entered a line, not a number')
+while True:
+    print(Fore.BLUE + f'\nEnter the programming languages you need\nCount number: {number_c}')
+    time.sleep(0.2)
+    print(Fore.MAGENTA + 'To stop typing, enter 0')
+    custom_language = input()
+    custom_language = custom_language.lower()
+    if(custom_language == '0'):
+        print(Fore.LIGHTWHITE_EX + f'\nTotal entered: {number_c - 1}')
+        break
+    if(custom_language in languages):
+        print(Fore.RED + "Such a programming language already exists in the array")
+        time.sleep(0.7)
         print(Fore.WHITE + 'Please, try again')
-        exit(0)
-    except:
-        errors += 1
-        print(Fore.RED + 'Unknown error')
-    for i in range(0, colvo):
-        while custom_language != languages:
-            print(Fore.BLUE + f'Enter the programming languages you need {number_c}')
-            custom_language = input()
-            if(custom_language in languages):
-                print(Fore.RED + "Such a programming language already exists in the array")
-                time.sleep(0.7)
-                print(Fore.WHITE + 'Please, try again')
-            else:
-                languages.append(custom_language)
-                number_c += 1
-                break
-else:
-    pass
+    if not custom_language or re.search("^\s*$", custom_language):
+        print(Fore.RED + "You haven't entered anything")
+        time.sleep(0.7)
+        print(Fore.WHITE + 'Please, try again')
+    else:
+        languages.append(custom_language)
+        number_c += 1
 
 if(password == 1):
-    print(Fore.RESET + 'Get info.', end='')
-    time.sleep(1)
-    print(Fore.RESET + '.', end='')
-    time.sleep(0.7)
-    print(Fore.RESET + '.', end='')
-    time.sleep(2)
-    print(Fore.RESET + '.', end='')
-    time.sleep(0.3)
-    print(Fore.RESET + '.')
-    api()
+    if(number_c != 1):
+        print(Fore.RESET + '\nGet info.', end='')
+        time.sleep(1)
+        print(Fore.RESET + '.', end='')
+        time.sleep(0.7)
+        print(Fore.RESET + '.', end='')
+        time.sleep(2)
+        print(Fore.RESET + '.', end='')
+        time.sleep(0.3)
+        print(Fore.RESET + '.')
+        api()
 if(password == 2):
-    print(Fore.GREEN + "START!")
-    api()
-
-print(Fore.LIGHTRED_EX + f'\nTotal errors - {errors}')
+    if(number_c != 1):
+        print(Fore.GREEN + "\nSTART!")
+        api()
+if(number_c != 1):
+    print(Fore.LIGHTRED_EX + f'\nTotal errors - {errors}')
 
 def plot():
     plt.bar(languages, count)
