@@ -5,7 +5,7 @@ import time
 from colorama import Fore, init
 import re
 
-password = int(input('Enter code access\n'))
+password = int(input(Fore.LIGHTCYAN_EX + 'Enter the mode\n' + Fore.CYAN + '1 - standart or 2 - fast\n'))
 
 errors = 0
 num = 0
@@ -69,7 +69,7 @@ while True:
         print(Fore.WHITE + 'Please, try again')
     if not custom_language or re.search("^\s*$", custom_language):
         print(Fore.RED + "You haven't entered anything")
-        time.sleep(0.7)
+        time.sleep(0.3)
         print(Fore.WHITE + 'Please, try again')
     else:
         languages.append(custom_language)
@@ -100,3 +100,4 @@ def plot():
     plt.xlabel('Языки')
     plt.ylabel('Количество проектов')
     plt.show()
+#plot()
